@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anniversary Celebration</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ffcccc, #ff99cc);
+      overflow: hidden;
+      height: 100%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    /* Fullscreen LED Border in Valentine Colors */
+    .led-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 1.5vw solid;
+      border-image: linear-gradient(45deg, pink, red, pink, red) 1;
+      animation: blink 1s infinite alternate;
+      padding: 2vw;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    @keyframes blink {
+      0% {border-color: pink;}
+      50% {border-color: red;}
+      100% {border-color: violet;}
+    }
+
+    /* Centered Container */
+    .content {
+      text-align: center;
+    }
+
+    /* Cake and Candle */
+    #cake {
+      font-size: 12vw;
+      display: inline-block;
+      position: relative;
+    }
+
+    #candle {
+      font-size: 4vw;
+      display: inline-block;
+      position: relative;
+      top: -5vw;
+      left: 6vw;
+    }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -15vh;
+      width: 8vw;
+      height: 10vh;
+      background: radial-gradient(circle at bottom, #ff7373, #ff0000);
+      border-radius: 50% 50% 50% 50%;
+      box-shadow: inset -15px -5px 10px rgba(0, 0, 0, 0.3);
+      animation: floatBalloon 8s ease-in-out infinite;
+    }
+
+    .balloon:nth-child(even) {
+      background: radial-gradient(circle at bottom, #ff99cc, #ff3366);
+      animation-duration: 10s;
+    }
+
+    @keyframes floatBalloon {
+      0% {transform: translateY(0) rotate(0deg);}
+      50% {transform: translateY(-50vh) rotate(20deg);}
+      100% {transform: translateY(-100vh) rotate(-20deg);}
+    }
+
+    /* Fireworks */
+    .fireworks {
+      position: absolute;
+      width: 0.5vw;
+      height: 0.5vw;
+      background: white;
+      border-radius: 50%;
+      animation: explode 1.5s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% {transform: scale(0); opacity: 1;}
+      100% {transform: scale(20); opacity: 0;}
+    }
+
+    .spark {
+      position: absolute;
+      width: 0.3vw;
+      height: 0.3vw;
+      background: red;
+      border-radius: 50%;
+      animation: sparkAnimation 1.5s ease-out forwards;
+    }
+
+    @keyframes sparkAnimation {
+      0% {transform: translate(0, 0); opacity: 1;}
+      100% {transform: translate(10vw, 10vh); opacity: 0;}
+    }
+
+    /* Message */
+    #message {
+      font-size: 2vw;
+      color: red;
+      margin-top: 3vh;
+      display: none;
+    }
+
+    /* Button */
+    #cutCakeBtn {
+      padding: 1vh 2vw;
+      font-size: 1.5vw;
+      background-color: hotpink;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 2vh;
+    }
+
+    /* Responsive Media Queries */
+    @media (max-width: 768px) {
+      #cake {
+        font-size: 20vw;
+      }
+
+      #candle {
+        font-size: 6vw;
+        top: -10vw;
+        left: 8vw;
+      }
+
+      #cutCakeBtn {
+        font-size: 3.5vw;
+        padding: 1.5vh 4vw;
+      }
+
+      #message {
+        font-size: 4vw;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #cake {
+        font-size: 25vw;
+      }
+
+      #candle {
+        font-size: 8vw;
+        top: -12vw;
+        left: 10vw;
+      }
+
+      #cutCakeBtn {
+        font-size: 4.5vw;
+        padding: 2vh 5vw;
+      }
+
+      #message {
+        font-size: 6vw;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fullscreen LED border -->
+  <div class="led-border">
+    <div class="content">
+      <h1>🎉 Happy Anniversary Miss Shadow 🎉</h1>
+      
+      <!-- Cake with Candle -->
+      <div id="cake">🎂</div>
+      <div id="candle">🕯️</div>
+
+      <!-- Cut Cake Button -->
+      <button id="cutCakeBtn">Cut the Cake</button>
+
+      <!-- Anniversary Message -->
+      <div id="message">❤️ Happy Anniversary Miss Shadow! ❤️</div>
+    </div>
+  </div>
+
+  <!-- Balloons -->
+  <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="balloon" style="left: 30%; animation-delay: 2s;"></div>
+  <div class="balloon" style="left: 50%; animation-delay: 4s;"></div>
+  <div class="balloon" style="left: 70%; animation-delay: 6s;"></div>
+  <div class="balloon" style="left: 90%; animation-delay: 8s;"></div>
+
+  <!-- Fireworks will be added dynamically -->
+
+  <script>
+    const cutCakeBtn = document.getElementById('cutCakeBtn');
+    const message = document.getElementById('message');
+    const cake = document.getElementById('cake');
+    const candle = document.getElementById('candle');
+
+    // Fireworks effect
+    function createFirework(x, y) {
+      const firework = document.createElement('div');
+      firework.classList.add('fireworks');
+      firework.style.left = `${x}px`;
+      firework.style.top = `${y}px`;
+      document.body.appendChild(firework);
+
+      // Create sparks
+      for (let i = 0; i < 20; i++) {
+        const spark = document.createElement('div');
+        spark.classList.add('spark');
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+        spark.style.animation = `sparkAnimation 1.5s ease-out forwards ${Math.random()}s`;
+        document.body.appendChild(spark);
+        
+        setTimeout(() => spark.remove(), 1500);
+      }
+
+      setTimeout(() => {
+        firework.remove();
+      }, 2000);
+    }
+
+    // Fireworks loop to continue after cake is cut
+    function continuousFireworks() {
+      setInterval(() => {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        createFirework(x, y);
+      }, 500);
+    }
+
+    // Trigger the cake cutting ceremony
+    cutCakeBtn.addEventListener('click', () => {
+      // Change cake to pastry
+      cake.innerHTML = '🍰🍰';
+
+      // Light the candle
+      //candle.innerHTML = '🕯️🔥';
+
+      // Show the message
+      message.style.display = 'block';
+
+      // Start continuous fireworks
+      continuousFireworks();
+
+      // Hide the button after cutting the cake
+      cutCakeBtn.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
